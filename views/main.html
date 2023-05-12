@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retail Shop</title>
+  </head>
+  <body>
+    <h1>Retail Store</h1>
+    <form action="/add-item" method="POST">
+      <label>Item Name</label>
+      <input type="text" name="item" />
+      <label>Description</label>
+      <input type="text" name="desc" />
+      <label>Price</label>
+      <input type="number" name="price" />
+      <label>Quantity</label>
+      <input type="number" name="quantity" />
+      <button type="submit">Add Item</button>
+    </form>
+
+    <ul id="listOfItems"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script>
+
+      axios
+        .get("http://localhost:3000/items")
+        .then((response) => {
+          const items = response.data;
+          console.log(response.data)
+          for (let i = 0; i < items.length; i++) {
+            const childElem = `<li id=${items[i].id}>${items[i].item} - ${items[i].description} Rs${items[i].price} ${items[i].quantity}
+                    <button onclick = buy1('${items[i].id})> Buy 1 </button>        
+                <button onclick = buy2('${items[i].id}')> Buy 2 </button>
+                <button onclick = buy3('${items[i].id}')> Buy 3 </button>
+                </li>`
+                const parentElement = document.getElementById('listOfItems')
+                parentElement.innerHTML = parentElement.innerHTML + childElem
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    </script>
+  </body>
+</html>
